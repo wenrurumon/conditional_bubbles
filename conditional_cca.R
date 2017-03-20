@@ -100,7 +100,7 @@ ccca <- function(x,y,con=rep(1,length(x))){
     con <- rep(1,length(x))
   }
   conp <- cca(cbind(x[con==1]),cbind(y[con==1]))[1]
-  tp <- t.test(y,y[con==1])$p.value
+  tp <- t.test(y[x==1&con==1],y[con==1])$p.value
   return(c(n=sum(con==1),ccap=conp,tp=tp))
 }
 
@@ -117,3 +117,7 @@ rlt.ccca <- do.call(rbind,
     do.call(rbind,rlt)
   })
 )
+rlt.ccca <- as.data.frame(rlt.ccca)
+rlt.ccca$d <- colnames(disease)[rlt.ccca$d]
+rlt.ccca$p <- colnames(phe)[rlt.ccca$p]
+rlt.ccca$d2 <- colnames(disease)[rlt.ccca$d2]
